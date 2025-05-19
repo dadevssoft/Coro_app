@@ -41,8 +41,14 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: 40),
                 ElevatedButton(onPressed: (){
                   loginForm.isValidForm();
+                  Navigator.pushNamed(context, 'home_screen'); //TODO cambiar por replacmennamed
                 }, 
-                child: Text('Guardar data'))
+                child: Text('Iniciar sesión')),
+                SizedBox(height: 40,),
+                TextButton(onPressed: (){
+                  Navigator.pushNamed(context, 'register_screen'); //TODO cambiar por replacmennamed
+                }, child: Text('¿No tienes una cuenta?'))
+
               ],
             ),
           ),

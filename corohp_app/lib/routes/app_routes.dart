@@ -8,8 +8,9 @@ class AppRoutes {
 
   static final Map<String, Widget Function(BuildContext)> routes = {
       'login_screen'    : (context) => LoginScreen(),
-      'home'            : (context) => HomeScreen(),
+      'home_screen'     : (context) => HomeScreen(),
       'calendar_screen' : (context) => CalendarScreen(),
+      'register_screen' : (context) => RegisterScreen(),
 
   };
   static Route<dynamic> onGenerateRoute(RouteSettings settings){

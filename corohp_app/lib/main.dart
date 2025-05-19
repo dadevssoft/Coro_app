@@ -1,7 +1,7 @@
-import 'package:corohp_app/providers/login_form_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:corohp_app/routes/app_routes.dart';
 import 'package:provider/provider.dart';
+import 'package:corohp_app/providers/providers.dart';
+import 'package:corohp_app/routes/app_routes.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,8 +11,11 @@ class MyApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => LoginFormProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LoginFormProvider()),
+        ChangeNotifierProvider(create: (context) => DropdownProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.initialRoute,

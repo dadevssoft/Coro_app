@@ -1,15 +1,19 @@
 import 'package:corohp_app/services/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:corohp_app/providers/providers.dart';
 import 'package:corohp_app/widgets/widgets.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
 
   const RegisterScreen ({super.key});
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {    
     final registerForm = Provider.of<RegisterFormProvider>(context);
@@ -154,7 +158,7 @@ class RegisterScreen extends StatelessWidget {
                         final email = registerData.email?.trim().toLowerCase();
                         final password = registerData.password;
                         final errorMessage = await authProvider.register(email!, password, dataToSave);
-                        
+                        if(!context.mounted) return;
                           if (errorMessage != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(errorMessage)),
@@ -181,7 +185,6 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-
 }
 
 

@@ -5,10 +5,15 @@ import 'package:provider/provider.dart';
 import 'package:corohp_app/providers/login_form_provider.dart';
 import 'package:corohp_app/widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
 
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     
@@ -40,24 +45,25 @@ class LoginScreen extends StatelessWidget {
                   onChanged: (value) => loginForm.password = value,
                   validator: loginForm.validatorContrasena,
                   ),
-                SizedBox(height: 40),
-                ElevatedButton(onPressed: () async{
+                 SizedBox(height: 40),
+               ElevatedButton(onPressed: () async{
                   if(loginForm.isValidForm()){
                     final email    = loginForm.email;
                     final password = loginForm.password;
                     final authProvider = Provider.of<AuthProviderD>(context, listen: false);
                     final errorMessage = await authProvider.login(email, password);
+                    if(!context.mounted) return; //Solucion al problema de los context
                     if (errorMessage == null){
-                      Navigator.pushNamed(context, 'home_screen');
+                        Navigator.pushNamed(context, 'home_screen');
                     }else{
                         showDialog( // Este da un mensaje de error cuando no haya registrado su gmail
                           context: context,
-                          builder: (_) => AlertDialog(
+                          builder: (dialogContext) => AlertDialog(
                                title: Text('Error de inicio de sesión'),
                                content: Text(errorMessage),
                                actions: [
                                   TextButton(
-                                    onPressed: () => Navigator.pop(context),
+                                    onPressed: () => Navigator.pop(dialogContext),
                                         child: Text('OK'))]));
                     }
                   }else{
